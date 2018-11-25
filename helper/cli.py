@@ -63,16 +63,48 @@ def _are_arguments_valid(arg1: str, arg2: str) -> Tuple[bool, str]:
         return True, ''
 
 
+def _get_perk_name(perk):
+    perk_name_regex = re.compile(r'alt="[a-zA-Zㄱ-힇 ]*')
+    perk_name_reqex2 = re.compile(r'[ㄱ-힇]{2}')
+
+    perk_str = str(perk)
+    perk_name = perk_name_regex.findall(perk_str)
+    if 'perkStyle' in perk_str:
+        perk_name = perk_name_reqex2.findall(perk_str)[0]
+    else:
+        perk_name = perk_name[0][5:]
+    return perk_name
+
+
+def _print_perk_row(perk_row):
+    perk_regex = re.compile(r'\/\/opgg-static\.akamaized\.net\/images\/lol.*png$')
+
+    perk_name = ''
+    perks = []
+    for perk in perk_row.find_all('img'):
+        if perk_regex.match(perk['src']):
+            perks.append('O')
+            perk_name = _get_perk_name(perk)
+        else:
+            perks.append('X')
+
+    print(f'{" ".join(perks)}\t\t{perk_name}')
+
+
+def _print_perk(perk_pages):
+    for perk_page in perk_pages[:2]:
+        for perk_row in perk_page.find_all(class_='perk-page__row'):
+            _print_perk_row(perk_row)
+        print()
+
+
 def _console_print(opgg_url):
     html = requests.get(opgg_url).text
     soup = BeautifulSoup(html, 'html.parser')
+    perk_pages = soup.find_all(class_='perk-page')
 
-    perk_wrap = soup.find(class_='perk-page-wrap')
-    perk_regex = re.compile(r'\/\/opgg-static\.akamaized\.net\/images\/lol.*png$')
+    _print_perk(perk_pages[:2])
 
-    for perk in perk_wrap.find_all(src=perk_regex):
-        perk_code = re.findall('\d{4}', perk.attrs['src'])[0]
-        print(perk_code)
 
 
 @click.command()
