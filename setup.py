@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='opgg-helper',
-    description='Increase accessibility to OP.GG stats',
+    description='CLI tool for increase accessibility to OP.GG stats',
     version='0.0.1',
     url='https://github.com/JoMingyu/opgg-helper',
     license='MIT License',
@@ -18,5 +18,9 @@ setup(
         'Programming Language :: Python :: 3',
         'Topic :: Software Development :: Libraries :: Python Modules'
     ],
-    packages=['helper']
+    entry_points={
+        'console_scripts': [
+            'opgg = helper.run:cli',
+        ],
+    },
 )
