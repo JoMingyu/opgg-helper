@@ -6,6 +6,7 @@ $ pip install git+https://github.com/JoMingyu/opgg-helper.git
 ## Usage
 ```
 $ opgg 미드 이렐리아
+$ opgg mid irelia
 $ opgg 미드 이렐
 $ opgg 이렐 미드
 $ opgg 이렐 ㅁㄷ
