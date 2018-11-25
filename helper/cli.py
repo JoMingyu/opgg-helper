@@ -2,6 +2,9 @@ import re
 import webbrowser
 from typing import Tuple
 
+import requests
+from bs4 import BeautifulSoup
+
 import click
 
 from helper.metadata import *
@@ -60,16 +63,33 @@ def _are_arguments_valid(arg1: str, arg2: str) -> Tuple[bool, str]:
         return True, ''
 
 
+def _console_print(opgg_url):
+    html = requests.get(opgg_url).text
+    soup = BeautifulSoup(html, 'html.parser')
+
+    perk_wrap = soup.find(class_='perk-page-wrap')
+    perk_regex = re.compile(r'\/\/opgg-static\.akamaized\.net\/images\/lol.*png$')
+
+    for perk in perk_wrap.find_all(src=perk_regex):
+        perk_code = re.findall('\d{4}', perk.attrs['src'])[0]
+        print(perk_code)
+
+
 @click.command()
 @click.argument('arg1')
 @click.argument('arg2')
-def handler(arg1: str, arg2: str):
+@click.option('-c/--console', default=False)
+def handler(arg1: str, arg2: str, c: bool):
     are_arguments_valid, msg = _are_arguments_valid(arg1, arg2)
 
     if are_arguments_valid:
         champion_name, position_name = _extract_retrieve_target_info_from_arguments(arg1, arg2)
         champion_name, position_name = _map_korean_arguments_to_english(champion_name, position_name)
 
-        webbrowser.open(HOST_FORMAT.format(champion_name=champion_name, position=position_name))
+        opgg_url = HOST_FORMAT.format(champion_name=champion_name, position=position_name)
+        if c:
+            _console_print(opgg_url)
+        else:
+            webbrowser.open(opgg_url)
     else:
         print(msg)

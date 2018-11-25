@@ -11,7 +11,9 @@ setup(
     maintainer='PlanB',
     maintainer_email='mingyu.planb@gmail.com',
     install_requires=[
-        'click'
+        'click',
+        'bs4',
+        'requests'
     ],
     classifiers=[
         'Programming Language :: Python',
