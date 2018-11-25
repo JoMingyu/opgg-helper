@@ -4,6 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+"bs4" = "*"
+pip = "==18.0"
 
 [dev-packages]
 
