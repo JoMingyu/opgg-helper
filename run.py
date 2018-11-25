@@ -1,5 +1,5 @@
-from helper.cli import browser
+from helper.cli import handler
 
 
 if __name__ == '__main__':
-    browser()
+    handler()

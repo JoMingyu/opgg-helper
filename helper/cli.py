@@ -63,7 +63,7 @@ def _are_arguments_valid(arg1: str, arg2: str) -> Tuple[bool, str]:
 @click.command()
 @click.argument('arg1')
 @click.argument('arg2')
-def browser(arg1: str, arg2: str):
+def handler(arg1: str, arg2: str):
     are_arguments_valid, msg = _are_arguments_valid(arg1, arg2)
 
     if are_arguments_valid:

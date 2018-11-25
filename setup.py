@@ -21,7 +21,7 @@ setup(
     packages=['helper'],
     entry_points={
         'console_scripts': [
-            'opgg = helper.run:cli',
+            'opgg = helper.cli:handler',
         ],
     },
 )
