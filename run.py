@@ -15,8 +15,6 @@ def cli():
 
 
 def _map_korean_champion_name_to_english(champion_name):
-    champion_name = champion_name.replace(' ', '')
-
     if champion_name not in CHAMPION_KOREAN_NAME_ENGLISH_NAME_MAPPING:
         raise ValueError()
 
@@ -41,14 +39,13 @@ def _extract_arguments(arg1, arg2):
         return arg2, arg1
     elif arg2 in VALID_POSITION_NAMES:
         return arg1, arg2
+    elif arg1 in VALID_CHAMPION_NAMES:
+        return arg1, arg2
+    elif arg2 in VALID_CHAMPION_NAMES:
+        return arg2, arg1
     else:
-        if arg1 in VALID_CHAMPION_NAMES:
-            return arg1, arg2
-        elif arg2 in VALID_CHAMPION_NAMES:
-            return arg2, arg1
-        else:
-            # 아 못찾겠당
-            raise ValueError()
+        # 아 못찾겠당
+        raise ValueError()
 
 
 @click.command()
