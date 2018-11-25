@@ -202,6 +202,15 @@ VALID_CHAMPION_NAMES = set(
     list(CHAMPION_KOREAN_NAME_ENGLISH_NAME_MAPPING.values())
 )
 
+TERM_COLOR = {
+    '정밀': '\033[33m',
+    '지배': '\033[31m',
+    '마법': '\033[35m',
+    '결의': '\033[32m',
+    '영감': '\033[36m',
+    'fragment': '\033[37m'
+}
+
 
 if __name__ == '__main__':
     import json
