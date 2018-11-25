@@ -1,10 +1,16 @@
 POSITION_KOREAN_NAME_ENGLISH_NAME_MAPPING = {
     '탑': 'top',
+    'ㅌ': 'top',
     '정글': 'jungle',
+    'ㅈㄱ': 'jungle',
     '미드': 'mid',
+    'ㅁㄷ': 'mid',
     '원딜': 'adc',
+    'ㅇㄷ': 'adc',
     '서폿': 'support',
-    '서포터': 'support'
+    'ㅅㅍ': 'support',
+    '서포터': 'support',
+    '.': '.'  # wildcard
 }
 
 VALID_POSITION_NAMES = set(

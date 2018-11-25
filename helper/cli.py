@@ -10,11 +10,6 @@ HOST_FORMAT = 'http://www.op.gg/champion/{champion_name}/statistics/{position}'
 ENGLISH_REGEX = re.compile('^[A-z]+$')
 
 
-@click.group()
-def cli():
-    pass
-
-
 def _map_korean_champion_name_to_english(champion_name: str) -> str:
     if champion_name not in CHAMPION_KOREAN_NAME_ENGLISH_NAME_MAPPING:
         raise ValueError()
@@ -23,9 +18,10 @@ def _map_korean_champion_name_to_english(champion_name: str) -> str:
 
 
 def _map_korean_position_name_to_english(position_name: str) -> str:
-    return POSITION_KOREAN_NAME_ENGLISH_NAME_MAPPING.get(position_name, '')
-    # position이 전달되지 않거나, 전달된 position이 invalid 하다면
-    # op.gg에서 가장 점유율 높은 포지션으로 리다이렉트 시켜주므로 key exist check하지 않음
+    if position_name not in POSITION_KOREAN_NAME_ENGLISH_NAME_MAPPING:
+        raise ValueError()
+
+    return POSITION_KOREAN_NAME_ENGLISH_NAME_MAPPING[position_name]
 
 
 def _map_korean_arguments_to_english(champion_name: str, position_name: str) -> Tuple[str, str]:
@@ -52,31 +48,28 @@ def _extract_retrieve_target_info_from_arguments(arg1: str, arg2: str) -> Tuple[
     elif arg2 in VALID_CHAMPION_NAMES:
         return arg2, arg1
     else:
-        # 아 못찾겠당
         raise ValueError()
+
+
+def _are_arguments_valid(arg1: str, arg2: str) -> Tuple[bool, str]:
+    if arg1 not in VALID_CHAMPION_NAMES and arg2 not in VALID_CHAMPION_NAMES:
+        return False, '그런 챔피언 없음 ㅡㅡ'
+    elif arg1 not in VALID_POSITION_NAMES and arg2 not in VALID_POSITION_NAMES:
+        return False, '그런 포지션 없음 ㅡㅡ'
+    else:
+        return True, ''
 
 
 @click.command()
 @click.argument('arg1')
 @click.argument('arg2')
 def browser(arg1: str, arg2: str):
-    champion_name, position_name = _extract_retrieve_target_info_from_arguments(arg1, arg2)
-    champion_name, position_name = _map_korean_arguments_to_english(champion_name, position_name)
+    are_arguments_valid, msg = _are_arguments_valid(arg1, arg2)
 
-    webbrowser.open(HOST_FORMAT.format(champion_name=champion_name, position=position_name))
+    if are_arguments_valid:
+        champion_name, position_name = _extract_retrieve_target_info_from_arguments(arg1, arg2)
+        champion_name, position_name = _map_korean_arguments_to_english(champion_name, position_name)
 
-
-# @click.command()
-# @click.argument('champion_name')
-# @click.argument('position')
-# def stash(champion_name, position_name):
-#     champion_name, position_name = _map_korean_arguments_to_english(champion_name, position_name)
-#
-#     return
-
-
-cli.add_command(browser)
-# cli.add_command(stash)
-
-if __name__ == '__main__':
-    cli()
+        webbrowser.open(HOST_FORMAT.format(champion_name=champion_name, position=position_name))
+    else:
+        print(msg)
