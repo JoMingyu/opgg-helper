@@ -181,6 +181,7 @@ CHAMPION_KOREAN_NAME_ENGLISH_NAME_MAPPING = {
     "파이크": "pyke",
     "판테온": "pantheon",
     "판테": "pantheon",
+    "빵테": "pantheon",
     "피들스틱": "fiddlesticks",
     "피들": "fiddlesticks",
     "피오라": "fiora",
@@ -189,6 +190,11 @@ CHAMPION_KOREAN_NAME_ENGLISH_NAME_MAPPING = {
     "딩거": "heimerdinger",
     "헤카림": "hecarim"
 }
+
+VALID_CHAMPION_NAMES = set(
+    list(CHAMPION_KOREAN_NAME_ENGLISH_NAME_MAPPING.keys()) +
+    list(CHAMPION_KOREAN_NAME_ENGLISH_NAME_MAPPING.values())
+)
 
 
 if __name__ == '__main__':
