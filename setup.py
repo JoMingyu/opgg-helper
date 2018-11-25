@@ -18,6 +18,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Topic :: Software Development :: Libraries :: Python Modules'
     ],
+    packages=['helper'],
     entry_points={
         'console_scripts': [
             'opgg = helper.run:cli',
