@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 "bs4" = "*"
 pip = "==18.0"
+requests = "*"
+click = "*"
 
 [dev-packages]
 
