@@ -77,12 +77,12 @@ def _get_perk_name(perk):
 
 
 def _print_perk_row(perk_row):
-    perk_regex = re.compile(r'\/\/opgg-static\.akamaized\.net\/images\/lol.*png$')
+    select_regex = re.compile(r'\/\/opgg-static\.akamaized\.net\/images\/lol.*png$')
 
     perk_name = ''
     perks = []
     for perk in perk_row.find_all('img'):
-        if perk_regex.match(perk['src']):
+        if select_regex.match(perk['src']):
             perks.append('O')
             perk_name = _get_perk_name(perk)
         else:
@@ -98,12 +98,39 @@ def _print_perk(perk_pages):
         print()
 
 
+def _get_fragment_name(fragment):
+    return str(fragment)[173:-16]
+
+
+def _print_fragment_row(fragment_row):
+    select_regex = re.compile(r'\/\/opgg-static\.akamaized\.net\/images\/lol.*png$')
+
+    fragments = []
+    fragment_name = ''
+    for fragment in fragment_row.find_all('img'):
+        if select_regex.match(fragment['src']):
+            fragments.append('O')
+            fragment_name = _get_fragment_name(fragment)
+        else:
+            fragments.append('X')
+
+    print(f'{" ".join(fragments)}\t\t{fragment_name}')
+
+
+def _print_fragment(fragment_page):
+    for fragment_row in fragment_page.find_all(class_='fragment__row'):
+        _print_fragment_row(fragment_row)
+
+
 def _console_print(opgg_url):
     html = requests.get(opgg_url).text
     soup = BeautifulSoup(html, 'html.parser')
+
     perk_pages = soup.find_all(class_='perk-page')
+    fragment_page = soup.find(class_='fragment__detail')
 
     _print_perk(perk_pages[:2])
+    _print_fragment(fragment_page)
 
 
 
