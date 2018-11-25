@@ -1,17 +1,15 @@
-## Usage
-### browser
-#### directly
+## Installation
 ```
-$ python run.py browser [champion] [position]
-$ python run.py browser [position] [champion]
-$ python run.py browser [champion] .
-# -> The position with the highest selection percentage for the champion is automatically selected
+$ pip install git+https://github.com/JoMingyu/opgg-helper.git
 ```
 
+## Usage
 ```
-$ python run.py browser akali mid
-$ python run.py browser mid akali
-$ python run.py browser 미드 이렐리아
-$ python run.py browser 이렐 미드
-$ python run.py browser 라이즈 .
+$ opgg 미드 이렐리아
+$ opgg 미드 이렐
+$ opgg 이렐 미드
+$ opgg 이렐 ㅁㄷ
+$ opgg ㅅㅍ 파이크
+$ opgg 자야 .
+# -> The position with the highest selection percentage for the champion is automatically selected
 ```
