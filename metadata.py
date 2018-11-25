@@ -1,14 +1,18 @@
-_POSITION_KO_EN_MAPPING = {
+POSITION_KOREAN_NAME_ENGLISH_NAME_MAPPING = {
     '탑': 'top',
     '정글': 'jungle',
     '미드': 'mid',
     '원딜': 'adc',
-    '서폿': 'support'
+    '서폿': 'support',
+    '서포터': 'support'
 }
 
-_VALID_POSITION_NAMES = list(_POSITION_KO_EN_MAPPING.keys()) + list(_POSITION_KO_EN_MAPPING.values())
+VALID_POSITION_NAMES = set(
+    list(POSITION_KOREAN_NAME_ENGLISH_NAME_MAPPING.keys()) +
+    list(POSITION_KOREAN_NAME_ENGLISH_NAME_MAPPING.values())
+)
 
-_CHAMPION_NAME_KO_EN_MAPPING = {
+CHAMPION_KOREAN_NAME_ENGLISH_NAME_MAPPING = {
     "가렌": "garen",
     "갈리오": "galio",
     "갱플랭크": "gangplank",
