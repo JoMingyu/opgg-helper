@@ -4,7 +4,7 @@ from typing import Tuple
 
 import click
 
-from metadata import *
+from helper.metadata import *
 
 HOST_FORMAT = 'http://www.op.gg/champion/{champion_name}/statistics/{position}'
 ENGLISH_REGEX = re.compile('^[A-z]+$')

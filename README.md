@@ -1,5 +1,6 @@
 ## Usage
-
+### browser
+#### directly
 ```
 $ python run.py browser [champion] [position]
 $ python run.py browser [position] [champion]
