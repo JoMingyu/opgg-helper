@@ -5,6 +5,7 @@ from typing import Tuple
 import click
 
 from helper.metadata import *
+from helper.console import console_print
 
 HOST_FORMAT = 'http://www.op.gg/champion/{champion_name}/statistics/{position}'
 ENGLISH_REGEX = re.compile('^[A-z]+$')
@@ -63,13 +64,18 @@ def _are_arguments_valid(arg1: str, arg2: str) -> Tuple[bool, str]:
 @click.command()
 @click.argument('arg1')
 @click.argument('arg2')
-def handler(arg1: str, arg2: str):
+@click.option('-c/--console', default=False)
+def handler(arg1: str, arg2: str, c: bool):
     are_arguments_valid, msg = _are_arguments_valid(arg1, arg2)
 
     if are_arguments_valid:
         champion_name, position_name = _extract_retrieve_target_info_from_arguments(arg1, arg2)
         champion_name, position_name = _map_korean_arguments_to_english(champion_name, position_name)
 
-        webbrowser.open(HOST_FORMAT.format(champion_name=champion_name, position=position_name))
+        opgg_url = HOST_FORMAT.format(champion_name=champion_name, position=position_name)
+        if c:
+            console_print(opgg_url)
+        else:
+            webbrowser.open(opgg_url)
     else:
         print(msg)
