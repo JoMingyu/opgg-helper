@@ -25,6 +25,9 @@ def _split_korean(korean_word: str) -> List[str]:
 
 def _get_similarity(typo: List[str], word: List[str]) -> int:
     similarity = 0
+    if sorted(typo) == sorted(word):
+        return 100
+
     for i in range(len(typo)):
         for j in range(len(word)-1, -1, -1):
             if typo[i] == word[j]:
@@ -45,6 +48,4 @@ def fix_typo(typo: str) -> str:
         if similarity > expect_length:
             expect_word = word
             expect_length = similarity
-    print(expect_word)
-
     return expect_word

@@ -49,7 +49,7 @@ def _print_perk(perk_pages):
 
 
 def _get_fragment_name(fragment):
-    return str(fragment)[173:-16]
+    return str(fragment)[180:-16]
 
 
 def _print_fragment_row(fragment_row):
