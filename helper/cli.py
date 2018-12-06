@@ -6,6 +6,7 @@ import click
 
 from helper.metadata import *
 from helper.console import console_print
+from helper.util import fix_typo
 
 HOST_FORMAT = 'http://www.op.gg/champion/{champion_name}/statistics/{position}'
 ENGLISH_REGEX = re.compile('^[A-z]+$')
@@ -68,12 +69,20 @@ def _are_arguments_valid(arg1: str, arg2: str) -> Tuple[bool, str]:
 def handler(arg1: str, arg2: str, c: bool):
     are_arguments_valid, msg = _are_arguments_valid(arg1, arg2)
 
+    if not are_arguments_valid:
+        if arg1 not in VALID_CHAMPION_NAMES and arg2 not in VALID_CHAMPION_NAMES:
+            arg1 = fix_typo(arg1)
+        if arg1 not in VALID_POSITION_NAMES and arg2 not in VALID_POSITION_NAMES:
+            arg2 = fix_typo(arg2)
+        are_arguments_valid, msg = _are_arguments_valid(arg1, arg2)
+
     if are_arguments_valid:
         champion_name, position_name = _extract_retrieve_target_info_from_arguments(arg1, arg2)
         champion_name, position_name = _map_korean_arguments_to_english(champion_name, position_name)
 
         opgg_url = HOST_FORMAT.format(champion_name=champion_name, position=position_name)
         if c:
+            print(arg1, arg2)
             console_print(opgg_url)
         else:
             webbrowser.open(opgg_url)
