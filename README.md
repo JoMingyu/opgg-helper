@@ -1,6 +1,6 @@
 ## Installation
 ```
-$ pip install git+https://github.com/JoMingyu/opgg-helper.git
+$ pip install opgg-helper
 ```
 
 ## Usage
